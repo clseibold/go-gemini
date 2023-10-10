@@ -115,7 +115,7 @@ func CleanStatus(status int) int {
 // It is the same as url.PathEscape, but it also replaces the +, because Gemini
 // requires percent-escaping for queries.
 func QueryEscape(query string) string {
-	return strings.ReplaceAll(url.PathEscape(query), "+", "%2B")
+	return strings.Replace(url.PathEscape(query), "+", "%2B", -1)
 }
 
 // QueryUnescape is the same as url.PathUnescape
