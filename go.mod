@@ -1,4 +1,4 @@
-module github.com/makeworld-the-better-one/go-gemini
+module github.com/clseibold/go-gemini
 
 go 1.14
 
