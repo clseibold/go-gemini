@@ -310,6 +310,7 @@ func (c *Client) connect(res *Response, host string, parsedURL *url.URL, clientC
 	conf := &tls.Config{
 		MinVersion:         tls.VersionTLS12,
 		InsecureSkipVerify: true, // This must be set to allow self-signed certs
+		ServerName:         host,
 	}
 	if clientCert.Certificate != nil {
 		// There is data, not an empty struct
