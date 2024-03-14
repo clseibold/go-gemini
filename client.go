@@ -307,10 +307,11 @@ func FetchWithHostAndCert(host, url string, certPEM, keyPEM []byte) (*Response, 
 }
 
 func (c *Client) connect(res *Response, host string, parsedURL *url.URL, clientCert tls.Certificate) (net.Conn, error) {
+	hostname, _, _ := net.SplitHostPort(host)
 	conf := &tls.Config{
 		MinVersion:         tls.VersionTLS12,
 		InsecureSkipVerify: true, // This must be set to allow self-signed certs
-		ServerName:         host,
+		ServerName:         hostname,
 	}
 	if clientCert.Certificate != nil {
 		// There is data, not an empty struct
@@ -364,8 +365,6 @@ func (c *Client) connect(res *Response, host string, parsedURL *url.URL, clientC
 	// Verify hostname
 	if !c.NoHostnameCheck {
 		// Cert hostname has to match connection host, not request host
-		hostname, _, _ := net.SplitHostPort(host)
-
 		if err := verifyHostname(cert, hostname); err != nil {
 			// Try with Unicode version
 			uniHost, uniErr := idna.ToUnicode(hostname)
